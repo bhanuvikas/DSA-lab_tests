@@ -2,79 +2,149 @@
 #include<stdlib.h>
 #include<string.h>
 
-char *strrev(char *str)
+void encode(char *str, int size)
 {
-      char *p1, *p2;
-
-      if (! str || ! *str)
-            return str;
-      for (p1 = str, p2 = str + strlen(str) - 1; p2 > p1; ++p1, --p2)
-      {
-            *p1 ^= *p2;
-            *p2 ^= *p1;
-            *p1 ^= *p2;
-      }
-      return str;
-}
-
-void encode(char *string, int size)
-{
-  int i,j,count=0;
   char *temp = (char *)malloc(sizeof(char));
-  for(i=0;i<size;i++)
-  {
-    if(string[i]!=' ')
-    {
-      temp[count]=string[i];
-      count++;
-      temp = (char *)realloc(temp, count+1);
-    }
-    else
-    {
-      temp[count]='\0';
-      temp = strrev(temp);
-      for(j=0;j<count;j++)
-      {
-        temp[j]+=3;
-      }
-      printf("%s ", temp);
-      count=0;
-      temp = (char *)realloc(temp, 1);
-    }
-  }
+  char ch;
+  int i,j,a=0;
+  for(i=0;i<=size;i++)
+  	{
+    	if(str[i]!=' ' && str[i]!='\0')
+    	{
+      		temp[a] = str[i];
+      		a++;
+      		str = (char *)realloc(str, a+1);
+    	}
+    	else
+    	{
+      		temp[a]='\0';
+      		//printf("%s\n",temp);
+      		//printf("%d\n",a);
+      		for(j=0;j<a/2;j++)
+      		{
+        		ch = temp[j];
+        		temp[j] = temp[a-j-1];
+        		temp[a-j-1] = ch;
+      		}
+      		for(j=0;j<a;j++)
+      		{
+            switch (temp[j])
+            {
+              case 'x':
+                temp[j]='a';
+                break;
+              case 'y':
+                temp[j]='b';
+                break;
+              case 'z':
+                temp[j]='c';
+                break;
+              case 'X':
+                temp[j]='A';
+                break;
+              case 'Y':
+                temp[j]='B';
+                break;
+              case 'Z':
+                temp[j]='C';
+                break;
+              default :
+                temp[j]+=3;
+            }
+      		}
+      		printf("%s ",temp);
+      		a=0;
+      		temp = (char *)realloc(temp, 1);
+    	}
+  	}
+    printf("\n");
 }
 
-void decode(char *string, int size)
+void decode(char *str, int size)
 {
+  char *temp = (char *)malloc(sizeof(char));
+  char ch;
+  int i,j,a=0;
+  for(i=0;i<=size;i++)
+  	{
+    	if(str[i]!=' ' && str[i]!='\0')
+    	{
+      		temp[a] = str[i];
+      		a++;
+      		str = (char *)realloc(str, a+1);
+    	}
+    	else
+    	{
+      		temp[a]='\0';
+      		//printf("%s\n",temp);
+      		//printf("%d\n",a);
 
+      		for(j=0;j<a;j++)
+      		{
+            switch (temp[j])
+            {
+              case 'a':
+                temp[j]='x';
+                break;
+              case 'b':
+                temp[j]='y';
+                break;
+              case 'c':
+                temp[j]='z';
+                break;
+              case 'A':
+                temp[j]='X';
+                break;
+              case 'B':
+                temp[j]='Y';
+                break;
+              case 'C':
+                temp[j]='Z';
+                break;
+              default :
+                temp[j]-=3;
+            }
+      		}
+          for(j=0;j<a/2;j++)
+      		{
+        		ch = temp[j];
+        		temp[j] = temp[a-j-1];
+        		temp[a-j-1] = ch;
+      		}
+      		printf("%s ",temp);
+      		a=0;
+      		temp = (char *)realloc(temp, 1);
+    	}
+  	}
+    printf("\n");
 }
 
 int main()
 {
-  int key, i, size=0;
+  int size=0,en,i;
+  char *str = (char *)malloc(sizeof(char));
   char ch;
-  char *string;
-  scanf("%d", &key);
-  string = (char *)malloc(sizeof(char));
+  printf("Enter 1 to encode or 0 to decode and then enter the string: ");
+  scanf("%d ", &en);
   for(i=0; ;i++)
   {
     scanf("%c", &ch);
     if(ch!='\n')
     {
-      string[size] = ch;
+      str[i]=ch;
       size++;
-      string = (char *)realloc(string, size+1);
+      //printf("hello\n");
+      str = (char *)realloc(str, size+1);
     }
-    else break;
+    else
+    {
+      str[size]='\0';
+      break;
+    }
   }
-  // 0->decode, 1->encode
-  if(key)
-  {
-    encode(string, size);
-  }
-  else
-  {
-    decode(string, size);
-  }
+  if(en) encode(str, size);
+  else decode(str, size);
+  //printf("%s\n", str);
+  //printf("%d\n", size);
   return 0;
 }
