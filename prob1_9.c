@@ -43,21 +43,13 @@ int main()
     {
       for(k=0;k<n;k++)
       {
-        temp+=(a[i][k]+b[k][j]);
+        temp+=(a[i][k]*b[k][j]);
       }
       c[i][j]=temp;
+      sum+=temp;
       temp=0;
     }
   }
-  printf("\n");
-  for(i=0;i<m;i++)
-  {
-    for(j=0;j<q;j++)
-    {
-      printf("%d ", c[i][j]);
-    }
-    printf("\n");
-  }
-  printf("\n");
+  printf("%d\n",sum);
   return 0;
 }
