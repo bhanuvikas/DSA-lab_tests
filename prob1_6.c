@@ -4,13 +4,13 @@
 
 int main()
 {
-  int i,c,n,p,ans=1;
-  scanf("%d %d %d", &c,&n,&p);
+  long long int i,c,n,p,ans=1;
+  scanf("%lld %lld %lld", &c,&n,&p);
   for(i=0;i<n;i++)
   {
-    ans*=c;
+    ans=((ans%p)*(c%p))%p;
   }
-  printf("%d\n", ans%p);
+  printf("%lld\n", ans);
 
   return 0;
 }
