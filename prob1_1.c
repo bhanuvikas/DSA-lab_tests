@@ -1,61 +1,47 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<math.h>
 
-int isMagicSquare(char **b, int k)
+int isPerfect(int len)
 {
-  int i,j;
-  for(i=0;i<k;i++)
+  int i;
+  for(i=0;i<len;i++)
   {
-    for(j=0;j<k;j++)
-    {
-      if(!(b[i][j]==b[j][i]))
-      {
-        return 0;
-      }
-    }
+    if(i*i == len) return i;
   }
-  return 1;
+  return 0;
 }
 
 int main()
 {
-  int n,i,j,l,k,p=0;
-  char a[100];
-  char **b;
-  scanf("%d", &n);
-  for(i=0;i<n;i++)
+  char str[100], a[100][100];
+  int n,i,j,len,k,p=0;
+  scanf("%s", str);
+  len = strlen(str);
+  k = isPerfect(len);
+  if(k)
   {
-    scanf("%s", a);
-    l = strlen(a);
-    k = sqrt(l);
-    if(k*k == l)
+    for(i=0;i<k;i++)
     {
-      **b = (char**)malloc(sizeof(char*)*k);
-      for(i=0;i<k;i++)
+      for(j=0;j<k;j++)
       {
-        b[i] = (char*)malloc(sizeof(char)*k);
+        a[i][j] = str[p++];
+        //printf("%d ", a[i][j]);
       }
-      for(i=0;i<k;i++)
+    }
+    for(i=0;i<k;i++)
+    {
+      for(j=0;j<k;j++)
       {
-        for(j=0;j<k;j++)
+        if(!(a[i][j]==a[j][i] && a[i][j]==a[k-j-1][k-i-1]))
         {
-          b[i][j] = a[p++];
+          printf("NO\n");
+          return 0;
         }
       }
-      if(isMagicSquare(b,k))
-      {
-        printf("YES\n");
-      }
-      else
-      {
-        printf("NO\n");
-      }
     }
-    else
-    {
-      printf("NO\n");
-    }
+    printf("YES\n");
   }
+  else printf("NO\n");
+  return 0;
 }
