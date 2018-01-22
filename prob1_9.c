@@ -4,14 +4,9 @@
 int main()
 {
   int m,n,p,q,i,j,k,sum=0,temp=0;
-  int **a, **b, **c;
+  int **a, **b;
   scanf("%d %d", &m, &n);
   a = (int **)malloc(sizeof(int *)*m);
-  c = (int **)malloc(sizeof(int *)*m);
-  for(i=0;i<m;i++)
-  {
-    c[i] = (int *)malloc(sizeof(int)*q);
-  }
   for(i=0;i<m;i++)
   {
     a[i] = (int *)malloc(sizeof(int)*n);
@@ -45,7 +40,7 @@ int main()
       {
         temp+=(a[i][k]*b[k][j]);
       }
-      c[i][j]=temp;
+     
       sum+=temp;
       temp=0;
     }
