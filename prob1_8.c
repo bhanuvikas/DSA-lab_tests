@@ -6,8 +6,8 @@ int main()
 {
   char check[8] = {'g','o','o','d','b','y','e','\0'};
   char *str=(char *)malloc(sizeof(char));
-  char ch,size=0;
-  int i,j,flag=0,c=0;
+  char ch;
+  int i,j,flag=0,c=0,size=0;
   for(i=0; ;i++)
   {
     scanf("%c", &ch);
